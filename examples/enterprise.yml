@@ -1,0 +1,26 @@
+name: Enterprise upload-evidence-action
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Optional runner hardening
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+      - name: Run upload-evidence-action
+        uses: bridgedai/upload-evidence-action@v1
+        with:
+          api-url: ${{ vars.BRIDGEDAI_API_URL }}
+          tenant: ${{ vars.BRIDGEDAI_TENANT }}

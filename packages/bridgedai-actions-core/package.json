@@ -1,0 +1,22 @@
+{
+  "name": "@bridgedai/actions-core",
+  "version": "1.0.0",
+  "description": "Shared HTTP client and helpers for BridgedAI GitHub Actions",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

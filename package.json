@@ -1,0 +1,28 @@
+{
+  "name": "@bridgedai/upload-evidence-action",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Upload SBOM and/or attestation to BridgedAI ingest APIs.",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/index.ts -o dist --minify --no-source-map-register",
+    "lint": "node -e \"console.log('lint: skipped')\"",
+    "security:audit": "npm audit --audit-level=high",
+    "test": "node --import tsx --test tests/*.test.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@bridgedai/actions-core": "file:./packages/bridgedai-actions-core"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@vercel/ncc": "^0.38.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.5.4"
+  },
+  "license": "MIT"
+}

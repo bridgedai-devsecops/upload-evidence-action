@@ -1,0 +1,113 @@
+name: 'BridgedAI Upload Evidence'
+description: 'POST /v1/ingest/sbom, /v1/ingest/attestation, and /v1/ingest/evidence (Sigstore/Rekor kinds). Recommends evidence:upload scope. Resolves build via POST /v1/builds/resolve when resolve-build=true.'
+author: 'BridgedAI'
+branding:
+  icon: 'shield'
+  color: 'purple'
+inputs:
+  api-base:
+    description: 'BridgedAI API base URL. Overrides BRIDGED_API_BASE.'
+    required: false
+  api-key:
+    description: 'BridgedAI API key. Overrides BRIDGED_API_KEY.'
+    required: false
+  org-id:
+    description: 'BridgedAI organization id. Overrides BRIDGED_ORG_ID.'
+    required: false
+  build-id:
+    description: 'Optional Bridged build id. When omitted, resolve-build controls POST /v1/builds/resolve.'
+    required: false
+  resolve-build:
+    description: 'When true (default), call POST /v1/builds/resolve if build-id is missing.'
+    required: false
+    default: 'true'
+  repo-full-name:
+    description: 'Repository full name (default GITHUB_REPOSITORY) for resolve and SBOM correlation.'
+    required: false
+  workflow-run-id:
+    description: 'GitHub workflow run id (default GITHUB_RUN_ID) for POST /v1/builds/resolve.'
+    required: false
+  commit-sha:
+    description: 'Commit SHA (default GITHUB_SHA) for POST /v1/builds/resolve.'
+    required: false
+  branch:
+    description: 'Branch (default GITHUB_REF_NAME) for POST /v1/builds/resolve.'
+    required: false
+  project-id:
+    description: 'Optional Bridged project id.'
+    required: false
+  artifact-id:
+    description: 'Optional Bridged artifact id.'
+    required: false
+  artifact-name:
+    description: 'Optional artifact name for artifact_metadata evidence.'
+    required: false
+  artifact-digest:
+    description: 'Optional sha256:… digest for artifact_metadata evidence.'
+    required: false
+  sbom-path:
+    description: 'Path to SPDX or CycloneDX JSON file.'
+    required: false
+  attestation-path:
+    description: 'Path to attestation JSON for /v1/ingest/attestation.'
+    required: false
+  signature-path:
+    description: 'Optional Cosign detached signature (PEM) or JSON bundle-like payload.'
+    required: false
+  certificate-path:
+    description: 'Optional signing certificate PEM.'
+    required: false
+  bundle-path:
+    description: 'Optional Sigstore bundle JSON for /v1/ingest/evidence kind=sigstore_bundle.'
+    required: false
+  rekor-metadata-path:
+    description: 'Optional Rekor metadata JSON for kind=rekor_entry.'
+    required: false
+  use-legacy-sigstore-attestation-ingest:
+    description: 'When true, wrap Sigstore material into /v1/ingest/attestation instead of /v1/ingest/evidence (backward compatibility only).'
+    required: false
+    default: 'false'
+  fail-on-unsupported-evidence:
+    description: 'When true, invalid bundle/PEM combinations fail the step instead of skipping.'
+    required: false
+    default: 'false'
+  publish-to-guac:
+    description: 'Forwarded as publishToGuac (default true).'
+    required: false
+    default: 'true'
+  ingest-source:
+    description: 'SBOM `source` field for POST /v1/ingest/sbom. Default implies `github-actions` (requires build-id with link-evidence default). Use `omit` or `none` to skip `source` for legacy SBOM without a build (pair with link-evidence=false).'
+    required: false
+    default: ''
+  link-evidence:
+    description: 'When true (default), send linkEvidence=true with SBOM when build-id is present. With default ingest source, build-id is required for SBOM.'
+    required: false
+    default: 'true'
+  timeout-ms:
+    description: 'HTTP timeout per request.'
+    required: false
+    default: '120000'
+outputs:
+  uploaded:
+    description: 'true if at least one ingest call succeeded'
+  sbom-uploaded:
+    description: 'true when SBOM ingest was attempted and returned ok'
+  attestation-uploaded:
+    description: 'true when attestation ingest was attempted and returned ok'
+  signature-uploaded:
+    description: 'true when signature material was uploaded via evidence or legacy path'
+  bundle-uploaded:
+    description: 'true when bundle was uploaded'
+  rekor-uploaded:
+    description: 'true when Rekor metadata was uploaded'
+  artifact-metadata-uploaded:
+    description: 'true when artifact_metadata evidence was uploaded'
+  build-id:
+    description: 'Bridged build id used for uploads'
+  evidence-ids-json:
+    description: 'JSON array of ids returned by the API when present (may be empty)'
+  evidence-summary-json:
+    description: 'JSON summary of ingest responses (no fabricated ids)'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
