@@ -1,6 +1,0 @@
-node_modules/
-.bridgedai/
-.tmp/
-coverage/
-*.log
-.DS_Store

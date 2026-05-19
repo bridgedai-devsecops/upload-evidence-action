@@ -16,6 +16,8 @@ Optional **`use-legacy-sigstore-attestation-ingest=true`** wraps Sigstore materi
 
 ## Permissions
 
+This action uses **BridgedAI API key authentication** (`api-key` / `BRIDGED_API_KEY` plus `org-id` / `BRIDGED_ORG_ID` and `api-base` / `BRIDGED_API_BASE`). It does **not** accept OIDC access tokens produced by `bridgedai-devsecops/auth-action`; keep policy evaluation on OIDC and evidence ingestion on API keys as separate steps unless your backend explicitly documents a shared bearer format.
+
 Recommend API key scope **`evidence:upload`** for SBOM, attestation, and generic evidence ingest. **`projects:update`** may still work for backward compatibility but is not the recommended scope for new CI keys.
 
 **`release-gates:evaluate`** is required for **`POST /v1/builds/resolve`** when the action resolves a build id (or use **`resolve-build-action`** in the workflow with the same scope).
