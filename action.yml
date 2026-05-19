@@ -6,8 +6,9 @@ branding:
   color: 'purple'
 inputs:
   api-base:
-    description: 'BridgedAI API base URL. Overrides BRIDGED_API_BASE.'
+    description: 'BridgedAI API base URL (https://api.bridgedai.io). Overrides BRIDGED_API_BASE.'
     required: false
+    default: 'https://api.bridgedai.io'
   api-key:
     description: 'BridgedAI API key. Overrides BRIDGED_API_KEY.'
     required: false
