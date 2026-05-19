@@ -1,5 +1,5 @@
 name: 'BridgedAI Upload Evidence'
-description: 'POST /v1/ingest/sbom, /v1/ingest/attestation, and /v1/ingest/evidence (Sigstore/Rekor kinds). Recommends evidence:upload scope. Resolves build via POST /v1/builds/resolve when resolve-build=true.'
+description: 'POST /v1/ingest/sbom, /v1/ingest/attestation, and /v1/ingest/evidence (Sigstore/Rekor kinds). Recommends evidence:upload scope.'
 author: 'BridgedAI'
 branding:
   icon: 'shield'
