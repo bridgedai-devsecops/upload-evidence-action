@@ -1,6 +1,6 @@
 # Security Policy
 
-Report vulnerabilities privately to security@bridgedai.io. Do not open public issues for vulnerabilities.
+Report security vulnerabilities via [GitHub Security Advisories](https://github.com/bridgedai-devsecops/bridgedai-github-actions/security/advisories/new) on the ecosystem repository. Do not open public issues for undisclosed vulnerabilities.
 
 ## Supported versions
 
