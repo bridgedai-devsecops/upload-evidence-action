@@ -9,8 +9,14 @@ inputs:
     description: 'BridgedAI API base URL (https://api.bridgedai.io). Overrides BRIDGED_API_BASE.'
     required: false
     default: 'https://api.bridgedai.io'
+  api-url:
+    description: 'Alias for api-base (staging E2E compatibility).'
+    required: false
   api-key:
-    description: 'BridgedAI API key. Overrides BRIDGED_API_KEY.'
+    description: 'BridgedAI API key. Overrides BRIDGED_API_KEY. Use access-token for OIDC-exchanged JWT instead.'
+    required: false
+  access-token:
+    description: 'BridgedAI access token from auth-action (Bearer auth). Preferred for OIDC staging E2E.'
     required: false
   org-id:
     description: 'BridgedAI organization id. Overrides BRIDGED_ORG_ID.'
@@ -88,6 +94,27 @@ inputs:
     description: 'HTTP timeout per request.'
     required: false
     default: '120000'
+  signal-file:
+    description: 'Path to signals JSON/JSONL batch for upload via /v1/ingest/evidence.'
+    required: false
+  evidence-dir:
+    description: 'Directory to scan for signal/evidence JSON files.'
+    required: false
+  evidence-file:
+    description: 'Single evidence context JSON file to upload.'
+    required: false
+  batch-size:
+    description: 'Max signals per ingest batch (default 100).'
+    required: false
+    default: '100'
+  fail-on-upload-error:
+    description: 'Fail when signal/evidence upload fails.'
+    required: false
+    default: 'true'
+  emit-demo-signals:
+    description: 'When true, allow demo-tagged signals. When false (default), filter dataSource=demo before upload.'
+    required: false
+    default: 'false'
 outputs:
   uploaded:
     description: 'true if at least one ingest call succeeded'
@@ -109,6 +136,18 @@ outputs:
     description: 'JSON array of ids returned by the API when present (may be empty)'
   evidence-summary-json:
     description: 'JSON summary of ingest responses (no fabricated ids)'
+  uploaded-count:
+    description: 'Total successful uploads (evidence + signals).'
+  deduped-count:
+    description: 'Signals skipped due to idempotency deduplication.'
+  failed-count:
+    description: 'Failed upload count.'
+  evidence-count:
+    description: 'Evidence ids collected from ingest responses.'
+  signal-count:
+    description: 'Signals read from signal-file/evidence-dir.'
+  ingestion-batch-id:
+    description: 'Last signal batch id sent to the backend.'
 runs:
   using: 'node20'
   main: 'dist/index.js'
