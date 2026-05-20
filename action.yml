@@ -13,7 +13,10 @@ inputs:
     description: 'Alias for api-base (staging E2E compatibility).'
     required: false
   api-key:
-    description: 'BridgedAI API key. Overrides BRIDGED_API_KEY. Use access-token for OIDC-exchanged JWT instead.'
+    description: 'BridgedAI API key. Overrides BRIDGED_API_KEY / BRIDGEDAI_API_KEY. Use access-token for OIDC-exchanged JWT instead.'
+    required: false
+  bridgedai-token:
+    description: 'Alias for api-key (same as auth-action bridgedai-token).'
     required: false
   access-token:
     description: 'BridgedAI access token from auth-action (Bearer auth). Preferred for OIDC staging E2E.'
