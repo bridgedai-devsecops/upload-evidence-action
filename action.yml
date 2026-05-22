@@ -1,5 +1,5 @@
 name: 'BridgedAI Upload Evidence'
-description: 'POST /v1/ingest/sbom, /v1/ingest/attestation, and /v1/ingest/evidence (Sigstore/Rekor kinds). Recommends evidence:upload scope. Resolves build via POST /v1/builds/resolve when resolve-build=true.'
+description: 'POST /v1/ingest/sbom, /v1/ingest/attestation, and /v1/ingest/evidence (Sigstore/Rekor kinds). Recommends evidence:upload scope. Ensures build via POST /v1/builds/ensure when resolve-build=true.'
 author: 'BridgedAI'
 branding:
   icon: 'shield'
@@ -25,23 +25,23 @@ inputs:
     description: 'BridgedAI organization id. Overrides BRIDGED_ORG_ID.'
     required: false
   build-id:
-    description: 'Optional Bridged build id. When omitted, resolve-build controls POST /v1/builds/resolve.'
+    description: 'Optional Bridged build id. When omitted, resolve-build controls POST /v1/builds/ensure.'
     required: false
   resolve-build:
-    description: 'When true (default), call POST /v1/builds/resolve if build-id is missing.'
+    description: 'When true (default), call POST /v1/builds/ensure if build-id is missing (idempotent CI registration).'
     required: false
     default: 'true'
   repo-full-name:
     description: 'Repository full name (default GITHUB_REPOSITORY) for resolve and SBOM correlation.'
     required: false
   workflow-run-id:
-    description: 'GitHub workflow run id (default GITHUB_RUN_ID) for POST /v1/builds/resolve.'
+    description: 'GitHub workflow run id (default GITHUB_RUN_ID) for POST /v1/builds/ensure.'
     required: false
   commit-sha:
-    description: 'Commit SHA (default GITHUB_SHA) for POST /v1/builds/resolve.'
+    description: 'Commit SHA (default GITHUB_SHA) for POST /v1/builds/ensure.'
     required: false
   branch:
-    description: 'Branch (default GITHUB_REF_NAME) for POST /v1/builds/resolve.'
+    description: 'Branch (default GITHUB_REF_NAME) for POST /v1/builds/ensure.'
     required: false
   project-id:
     description: 'Optional Bridged project id.'
